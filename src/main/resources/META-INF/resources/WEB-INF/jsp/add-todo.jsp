@@ -3,7 +3,7 @@
    <div class="container">
       <h1> Add Todo </h1>
       <hr>
-            <form:form method="post" modelAttribute="todo">
+            <form:form method="post" modelAttribute="todo" action="${pageContext.request.contextPath}/add-todo">
       
                     <fieldset class="mb-3">
                        <form:label path="id">ID</form:label>
@@ -12,8 +12,8 @@
                     
                     <fieldset class="mb-3">
                        <form:label path="id">Description</form:label>
-                       <form:input type="text" path="desc" required="required"></form:input>
-                       <form:errors path="desc" cssClass="text-warning"></form:errors>
+                       <form:input type="text" path="description" required="required"></form:input>
+                       <form:errors path="description" cssClass="text-warning"></form:errors>
                     </fieldset>
                     
                     <fieldset class="mb-3">

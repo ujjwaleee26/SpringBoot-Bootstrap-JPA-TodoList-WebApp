@@ -16,9 +16,9 @@ public class TodoService
     private static List<TodoStructure> todos =new ArrayList<>();
     static {
 //    	
-    	todos.add(new TodoStructure("Ujjwal",++id,"Learn GraphQL",LocalDate.now().plusYears(1),false));
-    	todos.add(new TodoStructure("Ujjwal",++id,"Learn SonarQube",LocalDate.now().plusYears(0),false));
-    	todos.add(new TodoStructure("Ujjwal",++id,"Learn RabbitMQ",LocalDate.now().plusYears(2),false));
+    	todos.add(new TodoStructure("Ujjwal",++id,"Learn GraphQL now",LocalDate.now().plusYears(1),false));
+    	todos.add(new TodoStructure("Ujjwal",++id,"Learn SonarQube now",LocalDate.now().plusYears(0),false));
+    	todos.add(new TodoStructure("Ujjwal",++id,"Learn RabbitMQ now",LocalDate.now().plusYears(2),false));
     }
     
     public List<TodoStructure> getTodoUserBased(String username)
@@ -33,9 +33,9 @@ public class TodoService
     	return todos.stream().filter(predicate).findFirst().get();
     }
     
-    public void addNewTodo(String username,String desc,LocalDate date,boolean status)
+    public void addNewTodo(String username,String description,LocalDate date,boolean status)
     {
-    	TodoStructure todo=new TodoStructure(username,++id,desc,date,status);
+    	TodoStructure todo=new TodoStructure(username,++id,description,date,status);
     	todos.add(todo);
     }
     

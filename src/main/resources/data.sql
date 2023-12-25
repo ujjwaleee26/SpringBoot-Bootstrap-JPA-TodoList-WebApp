@@ -1,0 +1,3 @@
+insert into TODO_STRUCTURE(ID,USERNAME,DESCRIPTION,DATE,STATUS) values(1001,'Ujjwal','Learn SonarQube',CURRENT_DATE(),false);
+insert into TODO_STRUCTURE(ID,USERNAME,DESCRIPTION,DATE,STATUS) values(1002,'Ujjwal','Learn GraphQL',CURRENT_DATE(),false);
+insert into TODO_STRUCTURE(ID,USERNAME,DESCRIPTION,DATE,STATUS) values(1003,'Ujjwal','Learn RabbitMQ',CURRENT_DATE(),false);

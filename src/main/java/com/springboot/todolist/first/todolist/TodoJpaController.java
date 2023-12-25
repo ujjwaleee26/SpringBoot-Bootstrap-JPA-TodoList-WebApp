@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,25 +15,24 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import jakarta.validation.Valid;
 
-
-// @Controller
-@SessionAttributes("name")
-public class TodoController 
+@Controller
+@SessionAttributes("username")
+public class TodoJpaController 
 {
-	private TodoService todolist;
+	private TodoListJpaRepository repository;
 	
-   public TodoController(TodoService todolist) {
+   public TodoJpaController(TodoListJpaRepository repository) {
 		super();
-		this.todolist = todolist;
+		this.repository=repository;
 	}
 
-   //--------xxxxx-------
+   
    @RequestMapping(value="todo")
    public String returnUserFilteredTodolist(ModelMap model)
 		     {
-	            String name = getLoggedInUserName(model);
-				List<TodoStructure> todos=todolist.getTodoUserBased(name);
-				model.addAttribute("todos",todos);
+	            String username = getLoggedInUserName(model);          
+				List<TodoStructure> todo=repository.findByUsername(username);
+				model.addAttribute("todo",todo);
 		    	 return "todo";
 		     }
 
@@ -41,19 +40,14 @@ public class TodoController
 	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	return authentication.getName();
     }
-   //--------xxxxx----	
-    
-    
-    //-------xxxxxxx-----
-    //Implementing 2 way binding(bean-server and server-bean
-    //Adding a todo
+   
     
     @RequestMapping(value="add-todo",method=RequestMethod.GET)
     public String redirectToAddTodoPage(ModelMap model) 
     {
-    	String name = getLoggedInUserName(model);
-    	TodoStructure todo=new TodoStructure(name,0,"",LocalDate.now(),false);
-    	model.put("todo",todo); 
+    	String username = getLoggedInUserName(model);
+    	TodoStructure todo=new TodoStructure(username,0,"",LocalDate.now(),false);
+    	model.addAttribute("todo",todo); 
     	return "add-todo";
     }
     
@@ -63,26 +57,25 @@ public class TodoController
     	if(result.hasErrors())
     	{
     		model.put("todo", todo);
+    		return "add-todo";
     	}
-    	String name = getLoggedInUserName(model);
-    	todolist.addNewTodo(name,todo.getDescription(), todo.getDate(), todo.isStatus());
+    	String username = getLoggedInUserName(model);
+    	todo.setUsername(username);
+    	repository.save(todo);
     	return "redirect:todo";
     }
-     
-    //-------xxxxx-----
     
     @RequestMapping(value="delete-todo")
     public String toDeleteTodo(@RequestParam int id)
     {
-    	todolist.deleteTodo(id);
+    	repository.deleteById(id);
     	return "redirect:todo";
     }
     
-    //-------xxxx-----
     @RequestMapping(value="update-todo",method=RequestMethod.GET)
     public String  redirectToUpdateTodoPage(@RequestParam int id,ModelMap model)
     {
-    	TodoStructure todo =todolist.getTodoIdBased(id);
+    	TodoStructure todo =repository.findById(id).get();
     	model.addAttribute("todo", todo);
     	return "add-todo";
     }
@@ -94,10 +87,11 @@ public class TodoController
     	{
     		model.put("todo", todo);
     	}
-    	String name=getLoggedInUserName(model);
-    	todo.setUsername(name);
-    	todolist.updateTodo(todo);
+    	String username=getLoggedInUserName(model);
+    	todo.setUsername(username);
+    	repository.save(todo);
     	return "redirect:todo";
     }
    
 }
+
