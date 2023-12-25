@@ -20,7 +20,7 @@
               <c:forEach items="${todos}" var="todo">
               <tr>
                  
-                  <td>${todo.desc}</td>
+                  <td>${todo.description}</td>
                   <td>${todo.date}</td>
                   <td>${todo.status}</td>
                   <td><a href="update-todo?id=${todo.id}" class="btn btn-info">Update</a></td>

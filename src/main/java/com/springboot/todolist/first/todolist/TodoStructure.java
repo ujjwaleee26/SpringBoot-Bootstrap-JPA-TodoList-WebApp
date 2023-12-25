@@ -2,21 +2,30 @@ package com.springboot.todolist.first.todolist;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.Size;
 
+@Entity
 public class TodoStructure 
 {
-	private String username;
+	public TodoStructure() {
+		
+	}
+	@Id
+	@GeneratedValue
     private int id;
+	private String username;
     @Size(min=10,message="err")
-    private String desc;
+    private String description;
     private LocalDate date;
     private boolean status;
-	public TodoStructure(String username,int id, String desc, LocalDate date, boolean status) {
+	public TodoStructure(String username,int id, String description, LocalDate date, boolean status) {
 		super();
 		this.username=username;
 		this.id = id;
-		this.desc = desc;
+		this.description = description;
 		this.date = date;
 		this.status = status;
 	}
@@ -32,11 +41,11 @@ public class TodoStructure
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	public LocalDate getDate() {
 		return date;
@@ -52,7 +61,7 @@ public class TodoStructure
 	}
 	@Override
 	public String toString() {
-		return "TodoStructure [username=" + username + ", id=" + id + ", desc=" + desc + ", date=" + date + ", status="
+		return "TodoStructure [username=" + username + ", id=" + id + ", description=" + description + ", date=" + date + ", status="
 				+ status + "]";
 	}
 	
