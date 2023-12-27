@@ -19,20 +19,21 @@ import jakarta.validation.Valid;
 @SessionAttributes("username")
 public class TodoJpaController 
 {
-	private TodoListJpaRepository repository;
 	
-   public TodoJpaController(TodoListJpaRepository repository) {
+	
+   public TodoJpaController(TodoStructureRepository repository) {
 		super();
 		this.repository=repository;
 	}
-
+private TodoStructureRepository repository;
    
    @RequestMapping(value="todo")
    public String returnUserFilteredTodolist(ModelMap model)
 		     {
-	            String username = getLoggedInUserName(model);          
-				List<TodoStructure> todo=repository.findByUsername(username);
-				model.addAttribute("todo",todo);
+	            String username = getLoggedInUserName(model);  
+				List<TodoStructure> todos=repository.findByUsername(username);
+				// log.info("Todo list for user {}: {}", username, todos);
+				model.put("todos",todos);
 		    	 return "todo";
 		     }
 

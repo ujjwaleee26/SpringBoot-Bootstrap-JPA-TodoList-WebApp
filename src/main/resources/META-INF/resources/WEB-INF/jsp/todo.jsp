@@ -1,7 +1,7 @@
    <%@ include file="common/header.jspf" %>
    <%@ include file="common/navigation.jspf" %>
    <div class="container">
-      <h1> Welcome to SpringVerse,${name}</h1>
+      <h1> Welcome to SpringVerse,${username}</h1>
       <hr>
       <h2>Your Todo List is:</h2>
       <table class="table">
